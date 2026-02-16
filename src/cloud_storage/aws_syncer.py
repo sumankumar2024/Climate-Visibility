@@ -6,7 +6,7 @@ class S3Sync:
     def sync_folder_to_s3(self,folder,aws_buket_name):
         """
         Method Name :   sync_folder_to_s3
-        Description :   This method syncs local folder to s3 bucket
+        Description :   This method syncs local folder to s3 bucket 
 
         Output      :   NA
         On Failure  :   Write an exception log and then raise an exception
