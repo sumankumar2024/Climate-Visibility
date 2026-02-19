@@ -35,20 +35,26 @@ class VisibilityData:
 
 
 
-    def get_collection_data(self,
-                            collection_name:str ) -> pd.DataFrame:
+    def get_collection_data(self, collection_name: str) -> pd.DataFrame:
+        try:
+            # Use MongoClient directly for better control
+            client = MongoClient(self.mongo_url)
+            collection = client[self.database_name][collection_name]
         
-        mongo_connection = mongo(
-            client_url= self.mongo_url,
-            database_name= self.database_name,
-            collection_name= collection_name
-        )
-        df = mongo_connection.find()
+            # Convert the cursor to a list, then to a DataFrame
+            data = list(collection.find())
+            if not data:
+                return pd.DataFrame() # Return empty if no data found
+            
+            df = pd.DataFrame(data)
         
-        if "_id" in df.columns.to_list():
-            df = df.drop(columns=["_id"])
-        df = df.replace({"na": np.nan})
-        return df
+            if "_id" in df.columns.to_list():
+                df = df.drop(columns=["_id"], axis=1)
+            
+            df.replace({"na": np.nan}, inplace=True)
+            return df
+        except Exception as e:
+            raise VisibilityException(e, sys)
 
 
 

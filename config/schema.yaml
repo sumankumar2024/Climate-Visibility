@@ -1,15 +1,15 @@
 columns:
-  - DATE: Object
-  - VISIBILITY : FLOAT
-  - DRYBULBTEMPF: FLOAT
-  - WETBULBTEMPF: FLOAT
-  - DewPointTempF : FLOAT
-  - RelativeHumidity : FLOAT
-  - WindSpeed : FLOAT
-  - WindDirection : FLOAT
-  - StationPressure : FLOAT
-  - SeaLevelPressure : FLOAT
-  - Precip : FLOAT
+  DATE: object
+  VISIBILITY: float
+  DRYBULBTEMPF: int
+  WETBULBTEMPF: int
+  DewPointTempF: int
+  RelativeHumidity: int
+  WindSpeed: int
+  WindDirection: int
+  StationPressure: float
+  SeaLevelPressure: float
+  Precip: float
 
 drop_columns:
   - DATE 

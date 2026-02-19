@@ -9,3 +9,9 @@ pre_project_implementation
 pred_files
 notebook
 .venv
+
+venv/
+__pycache__/
+*.pyc
+.env
+.git/

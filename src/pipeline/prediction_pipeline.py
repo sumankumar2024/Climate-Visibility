@@ -15,7 +15,7 @@ from dataclasses import dataclass
         
 @dataclass
 class PredictionPipelineConfig:
-    model_path = os.path.join("artifacts","prediction_model","model.pkl")
+    model_path = os.path.join("artifacts","02_19_2026_16_45_38","model_trainer","trained_model","model.pkl")
 
 
 
