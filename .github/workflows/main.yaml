@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        [cite_start]uses: actions/checkout@v3 [cite: 30]
+        uses: actions/checkout@v3
 
       - name: Login to Docker Hub
-        [cite_start]uses: docker/login-action@v2 [cite: 30]
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
-        [cite_start]uses: docker/build-push-action@v4 [cite: 30]
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true
@@ -30,18 +30,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to EC2
-        [cite_start]uses: appleboy/ssh-action@master [cite: 30, 95]
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 1. Pull the latest image from Docker Hub [cite: 30, 95]
+            # 1. Pull the latest image from Docker Hub
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/climate-visibility:latest
             
-            # 2. Stop and remove the old container if it exists 
+            # 2. Stop and remove the old container if it exists
             sudo docker stop climate-app || true
             sudo docker rm climate-app || true
             
-            # 3. Run the new container (Removed --env-file to prevent startup failure) 
+            # 3. Run the new container (Removed --env-file to prevent startup failure)
             sudo docker run -d --name climate-app -p 8062:8062 ${{ secrets.DOCKER_USERNAME }}/climate-visibility:latest
